@@ -29,9 +29,24 @@ api.route('/api/posts/:id').get(async (req, res) => {
 api.route('/api/add/').post(async (req, res) => {
 	try {
 		const post = new PostsSchema(req.body)
-		post.save()
+		await post.save()
 		
 		res.json({ msg: 'Post created', created: post })
+	} catch (e) {
+		console.error(e)
+		process.exit(1)
+	}
+})
+
+// This section will help you update post
+api.route('/api/update/').post(async (req, res) => {
+	try {
+		await PostsSchema.updateOne({guid: req.body.guid}, {
+			title: req.body.title,
+			description: req.body.description,
+		})
+		
+		res.json({ msg: 'Post updated', updated: req.body })
 	} catch (e) {
 		console.error(e)
 		process.exit(1)
