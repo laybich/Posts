@@ -1,17 +1,16 @@
 import Posts from '../pages/Posts';
 import PostIdPage from '../pages/PostIdPage';
-import CreatePost from '../pages/CreatePost';
-import UpdatePost from '../pages/UpdatePost';
-import PostService from '../API/PostService';
+import Login from '../pages/Login';
+import AdminPanel from '../pages/AdminPanel';
 
 
 export const privateRoutes = [
-	{path: 'posts', element: <Posts />}
+	{path: 'posts', element: <Posts />},
+	{path: 'posts/:id', element: <PostIdPage />},
 ]
 
 export const publicRoutes = [
+	{path: 'login', element: <Login />},
 	{path: 'posts', element: <Posts />},
 	{path: 'posts/:id', element: <PostIdPage />},
-	{path: 'create', element: <CreatePost create={post => PostService.addPost(post)} />},
-	{path: 'update/:id', element: <UpdatePost update={post => PostService.editPost(post)} />},
 ]

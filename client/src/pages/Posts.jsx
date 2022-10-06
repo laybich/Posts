@@ -2,33 +2,63 @@ import React, { useEffect, useState } from 'react'
 import PostService from '../API/PostService'
 import PostList from '../components/PostList'
 import { useFetching } from '../hooks/useFetching'
+import { usePosts } from '../hooks/usePosts'
+import {
+	TextField,
+	Select,
+	MenuItem,
+} from '@mui/material';
 
 function Posts() {
 	const [posts, setPosts] = useState([])
+	const [filter, setFilter] = useState({sort: 'id', query: ''})
+	const [totalPages, setTotalPages] = useState(0)
+	const [limit, setLimit] = useState(10)
+	const [page, setPage] = useState(1)
+	const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
 
 	const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
 		const response = await PostService.getAll()
 		setPosts([...posts, ...response])
 	})
 
-	const [removePost] = useFetching(async post => {
-		await PostService.removeById(post.guid)
-		setPosts(posts.filter(p => p.guid !== post.guid))
-	})
-
 	useEffect(() => {
-		fetchPosts()
-	}, [])
+		fetchPosts(limit, page)
+	}, [page, limit])
+
+	const changePage = page => {
+		setPage(page)
+	}
+
+	if (isPostsLoading) {
+		return <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}>Loading...</div>
+	}
+
+	if (postError) {
+		<h1>Error ${postError}</h1>
+	}
 
 	return (
 		<div className='App'>
-			{postError &&
-				<h1>Error ${postError}</h1>
-			}
-			<PostList remove={removePost} posts={posts} title={'POSTS'} />
-			{isPostsLoading &&
-				<div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}>Loading...</div>
-			}
+			<TextField
+				label='Search'
+				value={filter.query}
+				onChange={e => setFilter({...filter, query: e.target.value})}
+				variant='filled'
+				size='small'
+				margin='dense'
+         />
+			<Select
+				value={filter.sort}
+				onChange={e => setFilter({...filter, sort: e.target.value})}
+				size='small'
+				style={{margin: '8px 4px 4px '}}
+			>
+				<MenuItem value='id'>Id</MenuItem>
+				<MenuItem value='title'>Title</MenuItem>
+				<MenuItem value='pubDate'>Date</MenuItem>
+			</Select>
+			<PostList posts={sortedAndSearchedPosts} title={'POSTS'} />
 		</div>
 	)
 }

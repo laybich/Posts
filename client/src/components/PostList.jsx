@@ -1,8 +1,16 @@
 import React from 'react';
-import PostItem from './PostItem';
+import { Title } from 'react-admin';
+import {
+	Card,
+	Toolbar,
+	Table,
+	TableHead,
+	TableRow,
+	TableBody,
+	TableCell,
+} from '@mui/material';
 
-function PostList({remove, posts, title}) {
-
+function PostList({posts, title}) { 
 	if (!posts.length) {
 		return (
 			<h1 style={{textAlign: 'center'}}>
@@ -13,11 +21,27 @@ function PostList({remove, posts, title}) {
 
 	return (
 		<div className='posts'>
-			<h1 style={{textAlign: 'center'}}>{title}</h1>
-
-			{posts.map((post, index) =>
-				<PostItem remove={remove} number={index + 1} post={post} key={post.guid} />
-			)}
+			{/* <h1>{title}</h1> */}
+			<Card>
+				<Table sx={{ padding: 2 }} size="small">
+					<TableHead>
+						<TableRow>
+								<TableCell>Id</TableCell>
+								<TableCell>Title</TableCell>
+								<TableCell>Date</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{posts.map(post =>
+							<TableRow key={post.id}>
+								<TableCell>{post.id}</TableCell>
+								<TableCell>{post.title}</TableCell>
+								<TableCell>{new Date(post.pubDate).toLocaleDateString()}</TableCell>
+							</TableRow>
+						)}
+					</TableBody>
+				</Table>
+			</Card>
 		</div>
 	)
 }
