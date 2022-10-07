@@ -1,5 +1,6 @@
 import React from 'react';
-import { Admin, Resource, ListGuesser } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
+import authProvider from '../API/AuthProvider';
 import jsonServerProvider from 'ra-data-json-server';
 import { 
 	List,
@@ -63,7 +64,7 @@ const dataProvider = jsonServerProvider('http://localhost:4000/api/admin');
 
 function AdminPanel() {
 	return (
-		<Admin basename='/admin' dataProvider={dataProvider} dashboard={Dashboard}>
+		<Admin basename='/admin' dataProvider={dataProvider} authProvider={authProvider} dashboard={Dashboard}>
 			<Resource name='posts' list={PostList} edit={PostEdit} create={PostCreate} />
 		</Admin>
 	)

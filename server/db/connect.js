@@ -13,20 +13,20 @@ module.exports = {
 	},
 
 	updatePosts: async data =>
-		data.forEach(item => {
+		data.forEach(async item => {
 			const newPost = new Post({
 				title: item.title,
 				description: item.description,
 				pubDate: item.pubDate,
 				link: item.link,
 				categories: item.categories,
-				guid: item.guid,
-				creator: item['dc:creator'],
+				id: item.guid,
+				creator: item['dc:creator']['#'],
 			})
 
-			Post.findOne({guid: item.guid}, (err, post) => {
-				if (post === null) {
-					newPost.save()
+			await Post.findOne({id: item.guid}, async post => {
+				if (!post) {
+					await newPost.save()
 				}
 			})
 		})

@@ -3,12 +3,15 @@ const cors = require('cors')
 const parser = require('rss-url-parser')
 const cron = require('node-cron')
 const db = require('./db/connect')
+const admin = require('./router/admin')
 
 const app = express();
 const PORT = 4000;
 app.use(cors())
 app.use(express.json())
-app.use(require('./router/mongo'));
+app.use(require('./router/user'));
+
+admin(app)
 
 function rssParse(url) {
 	return parser(url)

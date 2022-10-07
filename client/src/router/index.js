@@ -5,12 +5,13 @@ import AdminPanel from '../pages/AdminPanel';
 
 
 export const privateRoutes = [
+	{path: '/admin/*', element: <AdminPanel />},
 	{path: 'posts', element: <Posts />},
 	{path: 'posts/:id', element: <PostIdPage />},
 ]
 
 export const publicRoutes = [
-	{path: 'login', element: <Login />},
+	{path: '/admin/*', element: <AdminPanel />},
 	{path: 'posts', element: <Posts />},
 	{path: 'posts/:id', element: <PostIdPage />},
 ]
