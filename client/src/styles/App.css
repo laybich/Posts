@@ -53,12 +53,13 @@
 
 .page {
 	padding: 10px;
-	border: 1px solid teal;
+	border-bottom: 1px solid rgb(29, 152, 200);
+	margin: 0 5px;
 	cursor: pointer;
 }
 
 .page__current {
-	border: 2px solid orange;
+	border-bottom: 2px solid orange;
 	font-weight: bold;
 }
 

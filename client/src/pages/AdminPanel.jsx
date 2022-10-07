@@ -64,7 +64,12 @@ const dataProvider = jsonServerProvider('http://localhost:4000/api/admin');
 
 function AdminPanel() {
 	return (
-		<Admin basename='/admin' dataProvider={dataProvider} authProvider={authProvider} dashboard={Dashboard}>
+		<Admin
+			basename='/admin'
+			dataProvider={dataProvider}
+			authProvider={authProvider}
+			dashboard={Dashboard}
+		>
 			<Resource name='posts' list={PostList} edit={PostEdit} create={PostCreate} />
 		</Admin>
 	)

@@ -7,8 +7,11 @@ import {
 	TextField,
 	Select,
 	MenuItem,
+	Toolbar,
+	Button,
 } from '@mui/material';
 import Pagination from '../components/UI/pagination/Pagination'
+import { useNavigate } from 'react-router-dom'
 
 function Posts() {
 	const [posts, setPosts] = useState([])
@@ -16,6 +19,7 @@ function Posts() {
 	const [totalPages, setTotalPages] = useState(0)
 	const [limit] = useState(10)
 	const [page, setPage] = useState(1)
+	const route = useNavigate()
 	const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
 
 	const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
@@ -43,6 +47,10 @@ function Posts() {
 
 	return (
 		<div className='App'>
+			<Toolbar style={{justifyContent: 'space-between'}}>
+				<p>Your Posts</p>
+				<Button onClick={() => route('/admin/login')}>Admin</Button>
+			</Toolbar>
 			<TextField
 				label='Search'
 				value={filter.query}

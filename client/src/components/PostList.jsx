@@ -23,7 +23,6 @@ function PostList({posts, title}) {
 
 	return (
 		<div className='posts'>
-			{/* <h1>{title}</h1> */}
 			<Card>
 				<Table sx={{ padding: 2 }} size="small">
 					<TableHead>
