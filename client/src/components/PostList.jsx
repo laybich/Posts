@@ -1,5 +1,4 @@
 import React from 'react';
-import { Title } from 'react-admin';
 import {
 	Card,
 	Toolbar,
@@ -9,8 +8,11 @@ import {
 	TableBody,
 	TableCell,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function PostList({posts, title}) { 
+	const route = useNavigate()
+
 	if (!posts.length) {
 		return (
 			<h1 style={{textAlign: 'center'}}>
@@ -33,7 +35,7 @@ function PostList({posts, title}) {
 					</TableHead>
 					<TableBody>
 						{posts.map(post =>
-							<TableRow key={post.id}>
+							<TableRow onClick={() => route(`/posts/${post.id}`)} key={post.id} style={{cursor: 'pointer'}}>
 								<TableCell>{post.id}</TableCell>
 								<TableCell>{post.title}</TableCell>
 								<TableCell>{new Date(post.pubDate).toLocaleDateString()}</TableCell>

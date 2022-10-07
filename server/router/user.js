@@ -5,8 +5,23 @@ const PostsSchema = require('../components/posts/PostsSchema')
 // This section will help you get a list of all the posts
 api.route('/api/posts').get(async (req, res) => {
 	try {
-		const all = await PostsSchema.find()
-		res.json(all)
+		let all = await PostsSchema.find()
+		const limit = req.query._limit
+		const page = req.query._page
+
+		if (limit && page) {
+			all = all.slice(
+				parseInt((page - 1) * limit),
+				parseInt(page * limit)
+			)
+		}
+
+		const count = await PostsSchema.countDocuments()
+
+		res.json({
+			posts: all,
+			count: count
+		})
 	} catch (e) {
 		console.error(e)
 		process.exit(1)
