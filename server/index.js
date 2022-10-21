@@ -3,6 +3,7 @@ const cors = require('cors')
 const parser = require('rss-url-parser')
 const cron = require('node-cron')
 const db = require('./db/connect')
+const posts = require('./db/posts')
 const admin = require('./router/admin')
 
 const app = express();
@@ -25,7 +26,7 @@ try {
 		// Update posts every minute
 		cron.schedule('* * * * *', async () => {
 			const data = await rssParse('https://lifehacker.com/rss')
-			db.updatePosts(data)
+			posts.updatePosts(data)
 		})
 
 		console.info(`Server is running on port: ${PORT}`);
