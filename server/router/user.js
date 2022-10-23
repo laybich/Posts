@@ -32,7 +32,7 @@ api.route('/api/posts/:id').get(async (req, res) => {
 	}
 })
 
-api.route('/api/authenticate').post(async (req, res) => {
+api.route('/api/authenticate').post((req, res) => {
 	try {
 		const user = {
 			id: 1,
