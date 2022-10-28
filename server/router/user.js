@@ -7,9 +7,9 @@ api.route('/api/posts').get(async (req, res) => {
 	try {
 		const limit = req.query._limit
 		const page = req.query._page
-		let all = await PostsSchema.find({}, null, {skip: (page - 1) * limit, limit: limit })
 
 		const count = await PostsSchema.countDocuments()
+		let all = await PostsSchema.find({}, null, {skip: (page - 1) * limit, limit: limit })
 
 		res.json({
 			posts: all,
